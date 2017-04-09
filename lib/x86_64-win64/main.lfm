@@ -1,0 +1,94 @@
+object Form1: TForm1
+  Left = 327
+  Height = 227
+  Top = 250
+  Width = 352
+  Caption = 'Form1'
+  ClientHeight = 227
+  ClientWidth = 352
+  OnCreate = FormCreate
+  LCLVersion = '6.0'
+  object oStart: TButton
+    Left = 24
+    Height = 33
+    Top = 192
+    Width = 83
+    Caption = 'Iniciar'
+    OnClick = oStartClick
+    TabOrder = 0
+  end
+  object oExit: TButton
+    Left = 240
+    Height = 33
+    Top = 184
+    Width = 83
+    Caption = 'Salir'
+    OnClick = oExitClick
+    TabOrder = 1
+  end
+  object oCnn_MySql: TZConnection
+    ControlsCodePage = cCP_UTF8
+    AutoEncodeStrings = False
+    ClientCodepage = 'utf8'
+    Catalog = 'rctech'
+    Properties.Strings = (
+      'AutoEncodeStrings='
+      'codepage=utf8'
+    )
+    SQLHourGlass = True
+    HostName = 'localhost'
+    Port = 3307
+    Database = 'rctech'
+    User = 'root'
+    Protocol = 'mysql-5'
+    Left = 8
+    Top = 8
+  end
+  object oConn_DBF: TDbf
+    FilePath = 'C:\Shared\Desarrollo\compucas\'
+    IndexDefs = <>
+    TableName = 'movto.DBF'
+    TableLevel = 4
+    Active = True
+    FilterOptions = []
+    Left = 272
+    Top = 11
+  end
+  object oDs_Z: TDataSource
+    DataSet = oQry_Z
+    Left = 8
+    Top = 120
+  end
+  object oQry_Z: TZQuery
+    Connection = oCnn_MySql
+    Params = <>
+    Left = 8
+    Top = 64
+  end
+  object oCSV_Exporter: TCSVExporter
+    FileName = 'C:\Shared\Descargas\movto.txt'
+    Dataset = oConn_DBF
+    ExportFields = <>
+    RestorePosition = False
+    FormatSettings.DecimalSeparator = #0
+    FormatSettings.CurrencyDigits = 0
+    FormatSettings.FieldDelimiter = ','
+    FormatSettings.IgnoreOuterWhitespace = False
+    FormatSettings.RowDelimiter = #13#10
+    FormatSettings.HeaderRow = False
+    FormatSettings.QuoteChar = '"'
+    Left = 272
+    Top = 72
+  end
+  object oQry_Op: TZQuery
+    Connection = oCnn_MySql
+    Params = <>
+    Left = 64
+    Top = 64
+  end
+  object oDs_Op: TDataSource
+    DataSet = oQry_Op
+    Left = 64
+    Top = 120
+  end
+end

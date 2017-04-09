@@ -1,0 +1,105 @@
+object fMain: TfMain
+  Left = 327
+  Height = 289
+  Top = 250
+  Width = 935
+  Caption = 'fMain'
+  ClientHeight = 289
+  ClientWidth = 935
+  OnCreate = FormCreate
+  LCLVersion = '6.0'
+  object oStart: TButton
+    Left = 8
+    Height = 33
+    Top = 248
+    Width = 83
+    Caption = 'Iniciar'
+    OnClick = oStartClick
+    TabOrder = 0
+  end
+  object oExit: TButton
+    Left = 104
+    Height = 33
+    Top = 248
+    Width = 83
+    Caption = 'Salir'
+    OnClick = oExitClick
+    TabOrder = 1
+  end
+  object DBGrid1: TDBGrid
+    Left = 304
+    Height = 272
+    Top = 8
+    Width = 600
+    Color = clWindow
+    Columns = <>
+    DataSource = oDs_Op
+    TabOrder = 2
+  end
+  object oCnn_MySql: TZConnection
+    ControlsCodePage = cCP_UTF8
+    AutoEncodeStrings = False
+    ClientCodepage = 'utf8'
+    Catalog = 'rctech'
+    Properties.Strings = (
+      'AutoEncodeStrings='
+      'codepage=utf8'
+    )
+    SQLHourGlass = True
+    HostName = 'localhost'
+    Port = 3307
+    Database = 'rctech'
+    User = 'root'
+    Protocol = 'mysql-5'
+    Left = 8
+    Top = 8
+  end
+  object oDs_Z: TDataSource
+    DataSet = oQry_Z
+    Left = 8
+    Top = 120
+  end
+  object oQry_Z: TZQuery
+    Connection = oCnn_MySql
+    Params = <>
+    Left = 8
+    Top = 64
+  end
+  object oCSV_Exporter: TCSVExporter
+    FileName = 'C:\Shared\Descargas\movto.txt'
+    Dataset = oQry_Op
+    ExportFields = <>
+    RestorePosition = False
+    FormatSettings.IntegerFormat = '#0'
+    FormatSettings.DecimalSeparator = '.'
+    FormatSettings.CurrencyDigits = 0
+    FormatSettings.BooleanTrue = '.T.'
+    FormatSettings.BooleanFalse = '.F.'
+    FormatSettings.TimeFormat = 'hh:nn:ss'
+    FormatSettings.FieldDelimiter = ','
+    FormatSettings.IgnoreOuterWhitespace = False
+    FormatSettings.HeaderRow = False
+    FormatSettings.QuoteChar = '"'
+    Left = 64
+    Top = 176
+  end
+  object oQry_Op: TZQuery
+    Connection = oCnn_MySql
+    Params = <>
+    Left = 64
+    Top = 64
+  end
+  object oDs_Op: TDataSource
+    DataSet = oQry_Op
+    Left = 64
+    Top = 120
+  end
+  object ZSQLMonitor1: TZSQLMonitor
+    Active = True
+    AutoSave = True
+    FileName = 'C:\Shared\Desarrollo\Compucas_CierrV1\log.sql'
+    MaxTraceCount = 100
+    Left = 64
+    Top = 8
+  end
+end
