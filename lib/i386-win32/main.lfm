@@ -1,36 +1,39 @@
 object fMain: TfMain
-  Left = 327
-  Height = 289
-  Top = 250
-  Width = 935
-  Caption = 'fMain'
-  ClientHeight = 289
-  ClientWidth = 935
+  Left = 215
+  Height = 334
+  Top = 217
+  Width = 913
+  Caption = 'COMPUCAS-[CIERRE CONTABLE APP.]'
+  ClientHeight = 334
+  ClientWidth = 913
+  DefaultMonitor = dmMainForm
+  OnActivate = FormActivate
   OnCreate = FormCreate
+  Position = poDesktopCenter
   LCLVersion = '6.0'
   object oStart: TButton
-    Left = 8
+    Left = 368
     Height = 33
-    Top = 248
+    Top = 288
     Width = 83
     Caption = 'Iniciar'
     OnClick = oStartClick
     TabOrder = 0
   end
   object oExit: TButton
-    Left = 104
+    Left = 456
     Height = 33
-    Top = 248
+    Top = 288
     Width = 83
     Caption = 'Salir'
     OnClick = oExitClick
     TabOrder = 1
   end
   object DBGrid1: TDBGrid
-    Left = 304
+    Left = 16
     Height = 272
     Top = 8
-    Width = 600
+    Width = 888
     Color = clWindow
     Columns = <>
     DataSource = oDs_Op
@@ -78,10 +81,11 @@ object fMain: TfMain
     FormatSettings.TimeFormat = 'hh:nn:ss'
     FormatSettings.FieldDelimiter = ','
     FormatSettings.IgnoreOuterWhitespace = False
+    FormatSettings.RowDelimiter = #13#10
     FormatSettings.HeaderRow = False
     FormatSettings.QuoteChar = '"'
-    Left = 64
-    Top = 176
+    Left = 432
+    Top = 256
   end
   object oQry_Op: TZQuery
     Connection = oCnn_MySql

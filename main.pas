@@ -23,6 +23,7 @@ type
     oExit: TButton;
     oQry_Z: TZQuery;
     ZSQLMonitor1: TZSQLMonitor;
+    procedure FormActivate(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure oExitClick(Sender: TObject);
     procedure oStartClick(Sender: TObject);
@@ -53,6 +54,7 @@ var
   cCTA_CMP_IMP07: string;
   cCTA_CMP_IMP10: string;
   cCTA_CMP_IMP15: string;
+  iAutoRun: integer;
 
 implementation
 
@@ -76,6 +78,7 @@ begin
   begin
     oINI := TINIFile.Create(cFile);
 
+    iAutoRun := oINI.ReadInteger('DBF-INFO', 'AUTORUN', 0);
     cCTA_VTA_GENE := oINI.ReadString('DBF-INFO', 'CTA_VTA_GENE', '');
     cCTA_VTA_EXEN := oINI.ReadString('DBF-INFO', 'CTA_VTA_EXEN', '');
     cCTA_VTA_GRAV := oINI.ReadString('DBF-INFO', 'CTA_VTA_GRAV', '');
@@ -90,7 +93,7 @@ begin
     cCTA_CMP_IMP10 := oINI.ReadString('DBF-INFO', 'CTA_CMP_IMP1', '');
     cCTA_CMP_IMP15 := oINI.ReadString('DBF-INFO', 'CTA_CMP_IMP15', '');
 
-    cCSV_File := cPath + FormatDateTime('yyyy-mm-dd_hhnnss',now()) + '-movto.CSV';
+    cCSV_File := cPath + FormatDateTime('yyyy-mm-dd_hhnnss', now()) + '-movto.CSV';
     self.oCSV_Exporter.FileName := cCSV_File;
     if (fileexists(cCSV_File) = True) then
     begin
@@ -120,6 +123,16 @@ begin
     self.oCnn_MySql.Catalog := oINI.ReadString(cSrv_act, 'base', '');
     self.oCnn_MySql.Connected := True;
     oINI.Free;
+  end;
+
+end;
+
+procedure TfMain.FormActivate(Sender: TObject);
+begin
+  if iAutoRun = 1 then
+  begin
+    self.oStartClick(self);
+    Close;
   end;
 
 end;
@@ -166,9 +179,9 @@ begin
     self.oQry_Op.ParamByName('cCTA_CMP_IMP10').AsString := (cCTA_CMP_IMP10);
     self.oQry_Op.ParamByName('cCTA_CMP_IMP15').AsString := (cCTA_CMP_IMP15);
     self.oQry_Op.Open;
-    SELF.oCSV_Exporter.FormatSettings.RowDelimiter:=#13#10;
-    SELF.oCSV_Exporter.FormatSettings.QuoteChar:='"';
-    SELF.oCSV_Exporter.FormatSettings.FieldDelimiter:=',';
+    SELF.oCSV_Exporter.FormatSettings.RowDelimiter := #13#10;
+    SELF.oCSV_Exporter.FormatSettings.QuoteChar := '"';
+    SELF.oCSV_Exporter.FormatSettings.FieldDelimiter := ',';
     SELF.oCSV_Exporter.FileName := cCSV_File;
     SELF.oCSV_Exporter.Execute;
   end;
