@@ -1,30 +1,43 @@
-object Form1: TForm1
-  Left = 327
-  Height = 227
-  Top = 250
-  Width = 352
-  Caption = 'Form1'
-  ClientHeight = 227
-  ClientWidth = 352
+object fMain: TfMain
+  Left = 215
+  Height = 334
+  Top = 217
+  Width = 913
+  Caption = 'COMPUCAS-[CIERRE CONTABLE APP.]'
+  ClientHeight = 334
+  ClientWidth = 913
+  DefaultMonitor = dmMainForm
+  OnActivate = FormActivate
   OnCreate = FormCreate
+  Position = poDesktopCenter
   LCLVersion = '6.0'
   object oStart: TButton
-    Left = 24
+    Left = 368
     Height = 33
-    Top = 192
+    Top = 288
     Width = 83
     Caption = 'Iniciar'
     OnClick = oStartClick
     TabOrder = 0
   end
   object oExit: TButton
-    Left = 240
+    Left = 456
     Height = 33
-    Top = 184
+    Top = 288
     Width = 83
     Caption = 'Salir'
     OnClick = oExitClick
     TabOrder = 1
+  end
+  object DBGrid1: TDBGrid
+    Left = 16
+    Height = 272
+    Top = 8
+    Width = 888
+    Color = clWindow
+    Columns = <>
+    DataSource = oDs_Op
+    TabOrder = 2
   end
   object oCnn_MySql: TZConnection
     ControlsCodePage = cCP_UTF8
@@ -41,18 +54,9 @@ object Form1: TForm1
     Database = 'rctech'
     User = 'root'
     Protocol = 'mysql-5'
+    LibraryLocation = 'C:\RCTECH\data\utiles\librerias'
     Left = 8
     Top = 8
-  end
-  object oConn_DBF: TDbf
-    FilePath = 'C:\Shared\Desarrollo\compucas\'
-    IndexDefs = <>
-    TableName = 'movto.DBF'
-    TableLevel = 4
-    Active = True
-    FilterOptions = []
-    Left = 272
-    Top = 11
   end
   object oDs_Z: TDataSource
     DataSet = oQry_Z
@@ -67,18 +71,22 @@ object Form1: TForm1
   end
   object oCSV_Exporter: TCSVExporter
     FileName = 'C:\Shared\Descargas\movto.txt'
-    Dataset = oConn_DBF
+    Dataset = oQry_Op
     ExportFields = <>
     RestorePosition = False
-    FormatSettings.DecimalSeparator = #0
+    FormatSettings.IntegerFormat = '#0'
+    FormatSettings.DecimalSeparator = '.'
     FormatSettings.CurrencyDigits = 0
+    FormatSettings.BooleanTrue = '.T.'
+    FormatSettings.BooleanFalse = '.F.'
+    FormatSettings.TimeFormat = 'hh:nn:ss'
     FormatSettings.FieldDelimiter = ','
     FormatSettings.IgnoreOuterWhitespace = False
     FormatSettings.RowDelimiter = #13#10
     FormatSettings.HeaderRow = False
     FormatSettings.QuoteChar = '"'
-    Left = 272
-    Top = 72
+    Left = 432
+    Top = 256
   end
   object oQry_Op: TZQuery
     Connection = oCnn_MySql
@@ -90,5 +98,12 @@ object Form1: TForm1
     DataSet = oQry_Op
     Left = 64
     Top = 120
+  end
+  object ZSQLMonitor1: TZSQLMonitor
+    AutoSave = True
+    FileName = 'C:\Shared\Desarrollo\Compucas_CierrV1\log.sql'
+    MaxTraceCount = 100
+    Left = 64
+    Top = 8
   end
 end

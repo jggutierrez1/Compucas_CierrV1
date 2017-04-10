@@ -99,7 +99,6 @@ object fMain: TfMain
     Top = 120
   end
   object ZSQLMonitor1: TZSQLMonitor
-    Active = True
     AutoSave = True
     FileName = 'C:\Shared\Desarrollo\Compucas_CierrV1\log.sql'
     MaxTraceCount = 100

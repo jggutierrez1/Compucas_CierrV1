@@ -39,7 +39,10 @@ var
   cSql_ln: string;
   cSuc_id, cEst_Id, cZ, cZfecha: string;
   cSql_File: string;
+  cSql_Log: string;
   cCSV_File: string;
+  cTXT_DIR: string;
+  cFull_TXT_DIR: string;
 
   cCTA_VTA_GENE: string;
   cCTA_VTA_EXEN: string;
@@ -74,11 +77,21 @@ begin
   cPath := IncludeTrailingPathDelimiter(ExtractFilePath(Application.ExeName));
   cFile := cPath + 'cierre_conta.ini';
   cSql_File := cPath + 'SQL_SENTENSES.SQL';
+  cSql_Log := cPath + 'SQL_LOG.SQL';
+
+
+  SELF.ZSQLMonitor1.Active := False;
+  SELF.ZSQLMonitor1.FileName := cSql_Log;
   if fileexists(cFile) = True then
   begin
     oINI := TINIFile.Create(cFile);
 
     iAutoRun := oINI.ReadInteger('DBF-INFO', 'AUTORUN', 0);
+    cTXT_DIR := oINI.ReadString('DBF-INFO', 'TXT_DIR', '');
+    cFull_TXT_DIR := cPath + cTXT_DIR;
+    {$IOChecks off}
+    //mkdir(cFull_TXT_DIR);
+    {$IOChecks on}
     cCTA_VTA_GENE := oINI.ReadString('DBF-INFO', 'CTA_VTA_GENE', '');
     cCTA_VTA_EXEN := oINI.ReadString('DBF-INFO', 'CTA_VTA_EXEN', '');
     cCTA_VTA_GRAV := oINI.ReadString('DBF-INFO', 'CTA_VTA_GRAV', '');
@@ -93,7 +106,7 @@ begin
     cCTA_CMP_IMP10 := oINI.ReadString('DBF-INFO', 'CTA_CMP_IMP1', '');
     cCTA_CMP_IMP15 := oINI.ReadString('DBF-INFO', 'CTA_CMP_IMP15', '');
 
-    cCSV_File := cPath + FormatDateTime('yyyy-mm-dd_hhnnss', now()) + '-movto.CSV';
+    cCSV_File := IncludeTrailingPathDelimiter(cFull_TXT_DIR) + FormatDateTime('yyyy-mm-dd_hhnnss', now()) + '.CSV';
     self.oCSV_Exporter.FileName := cCSV_File;
     if (fileexists(cCSV_File) = True) then
     begin
@@ -122,6 +135,7 @@ begin
     self.oCnn_MySql.Database := oINI.ReadString(cSrv_act, 'base', '');
     self.oCnn_MySql.Catalog := oINI.ReadString(cSrv_act, 'base', '');
     self.oCnn_MySql.Connected := True;
+    SELF.ZSQLMonitor1.Active := True;
     oINI.Free;
   end;
 
